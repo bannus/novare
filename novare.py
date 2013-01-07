@@ -27,10 +27,10 @@ for beer in soup.find("span", "draughts_reg").find_all("p"):
             print "<heading>" +  beer + "</heading>"
         else:
             print "<beer>" + beer + "</beer>"
-            response = json.loads(BreweryDb.search({'type':'beer','q':beer}))
-            if 'totalResults' in response:
-                beerInfo = response['data'][0]
-                print beerInfo['name'].encode('utf-8')
+            #response = json.loads(BreweryDb.search({'type':'beer','q':beer}))
+            #if 'totalResults' in response:
+                #beerInfo = response['data'][0]
+                #print beerInfo['name'].encode('utf-8')
 
 
 print "<timestamp>"
