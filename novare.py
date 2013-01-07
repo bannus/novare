@@ -12,8 +12,8 @@ import json
 response = urllib2.urlopen('http://novareresbiercafe.com/draught.php')
 html = response.read().decode('utf-8')
 soup = BeautifulSoup(html)
-print '<?xml version="1.0" ?>'
-print "<beers>"
+print '{'
+print "beers: "
 
 # configure brewerydb API
 BreweryDb.configure("3e87654b8c90922e6fe4aaefa3e45a89")
@@ -28,9 +28,10 @@ for beer in soup.find("span", "draughts_reg").find_all("p"):
         else:
             print "<beer>" + beer + "</beer>"
             #response = json.loads(BreweryDb.search({'type':'beer','q':beer}))
-            #if 'totalResults' in response:
-                #beerInfo = response['data'][0]
-                #print beerInfo['name'].encode('utf-8')
+            json.dumps(response['data'][0])
+            if 'totalResults' in response:
+                beerInfo = response['data'][0]
+                print beerInfo['name'].encode('utf-8')
 
 
 print "<timestamp>"
