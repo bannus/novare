@@ -1,11 +1,58 @@
+<?
+$i = 0;
+function printList($beers)
+{
+    global $i;
+    foreach ($beers as $beer) 
+    {
+        echo "<div class=\"accordion-group\">";
+        echo "<div class=\"accordion-heading\">", PHP_EOL;
+        echo "<div class=\"accordion-toggle\">", PHP_EOL;
+        echo "<a href=\"http://beeradvocate.com/search?q={$beer['novareName']}\">";
+        echo $beer['novareName'];
+        echo "</a>";
+        if (isset($beer['style']))
+        {
+            echo " - {$beer['style']['name']}";
+        }
+        if (isset($beer['abv']))
+        {
+            echo " - {$beer['abv']}%";
+        }
+        if (isset($beer['description']))
+        {
+            echo " - ";
+            echo "<a data-toggle=\"collapse\" data-parent=\"#accordion2\" href=\"#collapse$i\">";
+            echo "Description";
+            echo "</a>";
+            echo "</div>", PHP_EOL;
+            echo "</div>", PHP_EOL;
+            echo "<div id=\"collapse$i\" class=\"accordion-body collapse\">";
+            echo "<div class=\"accordion-inner\">";
+            echo "{$beer['description']}";
+            echo "</div>", PHP_EOL;
+            echo "</div>", PHP_EOL;
+        }
+        else
+        {
+            echo "</div>", PHP_EOL;
+            echo "</div>", PHP_EOL;
+        }
+        echo "</div>", PHP_EOL;
+        $i++;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Novare Res</title>
-    
-    <link href="bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet" />
-    <link href="style/style.css" type="text/css" media="screen" rel="stylesheet" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title>Novare Res</title>
+
+<link href="bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet" />
+<link href="bootstrap/css/bootstrap-responsive.css" type="text/css" media="screen" rel="stylesheet" />
+<link href="style/style.css" type="text/css" media="screen" rel="stylesheet" />
 </head>
 <body>
 <div class="wrapper">
@@ -13,35 +60,23 @@
         <div class="padding">
             <h1>Novare Res</h1>
             <h2>Beers on Tap</h2>
-            <ul>
-                <?
-                $request_url = "http://cloud.cs50.net/~kloot/novare/source.xml";
-                $beers = simplexml_load_file($request_url) or die("couldn't find xml document");
-
-                foreach ($beers->beer as $beer) {
-                    echo "<li>";
-                    echo "<a href=\"http://beeradvocate.com/search?q=$beer\">";
-                    echo $beer;
-                    $url = "http://api.brewerydb.com/v2/";
-                    $data = "search?q=$beer&type=beer&key=3e87654b8c90922e6fe4aaefa3e45a89";
-                    $ch = curl_init($url);
-                    curl_setopt($ch, CURLOPT_POST ,1);
-                    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1); /* obey redirects */
-                    curl_setopt($ch, CURLOPT_HEADER, 0);  /* No HTTP headers */
-                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);  /* return the data */
-                    $result = curl_exec($ch);
-
-                    curl_close($ch);
-                    echo "</a>";
-                    echo "<br/>", PHP_EOL;
+            <div class="accordion" id="accordion2">
+            <?
+                $file = "http://cloud.cs50.net/~kloot/novare/source.json";
+                $json = json_decode(file_get_contents($file), true);
+                foreach($json['lists'] as $name=>$list)
+                {
+                    print "<h3>$name</h3>";
+                    printList($list);
                 }
-                ?>
-            </ul>
-            Last updated <?= $beers->timestamp ?> EST
+            ?>
+            </div>
+            Last updated <?= $json['timestamp'] ?> EST
         </div>
     </div>
 </div>    
 </div><!-- / -->
+<script type="text/javascript" src="bootstrap/js/jquery.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
