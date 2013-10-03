@@ -59,7 +59,6 @@ function printList($beers)
     <div class="content">
         <div class="padding">
             <h1>Novare Res</h1>
-            <h2>Beers on Tap</h2>
             <div class="accordion" id="accordion2">
             <?
                 $file = "http://cloud.cs50.net/~kloot/novare/source.json";

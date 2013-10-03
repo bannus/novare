@@ -9,6 +9,7 @@ from time import localtime, strftime
 from brewerydb import *
 import json
 import sys
+import config
 
 # command line arg for
 useAPI = True
@@ -25,10 +26,15 @@ soup = BeautifulSoup(html)
 lists = OrderedDict() 
 listTitles = [
     "On Draught",
+    "Regular Draughts",
+    "Regular Draughts:",
+    "On Draught:",
     "On Tap",
     "Regular Draughts",           
     "Non Belgian Offerings", 
     "Maine Draughts",
+    "Maine Draughts:",
+    "Maine Beer Draughts",
     "Maine Taps",
     "On Cask",
     "On Draught",
@@ -37,12 +43,16 @@ listTitles = [
 
 # default index in case none listed/recognized
 index = listTitles[0]
+lists[index] = []
 
 # configure brewerydb API
-BreweryDb.configure("3e87654b8c90922e6fe4aaefa3e45a89")
+BreweryDb.configure(config.key)
 
 # find all beers in the draughts_reg span
 for beer in soup.find("span", "draughts_reg").find_all("p"):
+    # get rid of tags in section header
+    beer.string = beer.get_text()
+
     # do not display empty entries
     if beer.string != None and beer.string.strip() != "":
         beer.string = beer.string.strip()
