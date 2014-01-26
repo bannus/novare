@@ -42,6 +42,7 @@ listTitles = listTitles + [title + ":" for title in listTitles]
 
 # configure brewerydb API
 BreweryDb.configure(config.key)
+index = None
 
 # find all beers in the draughts_reg span
 for beer in soup.find("span", "draughts_reg").find_all("p"):
@@ -60,7 +61,7 @@ for beer in soup.find("span", "draughts_reg").find_all("p"):
             lists[index] = []
         else:
             # default index in case none listed/recognized
-            if index == null:
+            if index == None:
                 index = listTitles[0]
                 lists[index] = []
             if useAPI == True:
