@@ -23,27 +23,22 @@ html = response.read().decode('utf-8')
 soup = BeautifulSoup(html)
 
 # for storing the various categories of draughts
-lists = OrderedDict() 
+lists = OrderedDict()
 listTitles = [
     "On Draught",
     "Regular Draughts",
-    "Regular Draughts:",
-    "On Draught:",
+    "Draughts",
     "On Tap",
-    "Regular Draughts",           
-    "Non Belgian Offerings", 
+    "Regular Draughts",
+    "Non Belgian Offerings",
     "Maine Draughts",
-    "Maine Draughts:",
     "Maine Beer Draughts",
     "Maine Taps",
     "On Cask",
     "On Draught",
     "Stout Fest Offerings"
 ]
-
-# default index in case none listed/recognized
-index = listTitles[0]
-lists[index] = []
+listTitles = listTitles + [title + ":" for title in listTitles]
 
 # configure brewerydb API
 BreweryDb.configure(config.key)
@@ -64,6 +59,10 @@ for beer in soup.find("span", "draughts_reg").find_all("p"):
             index = beer
             lists[index] = []
         else:
+            # default index in case none listed/recognized
+            if index == null:
+                index = listTitles[0]
+                lists[index] = []
             if useAPI == True:
                 response = json.loads(BreweryDb.search({'type':'beer','q':beer}))
             if 'totalResults' in response:
@@ -72,7 +71,7 @@ for beer in soup.find("span", "draughts_reg").find_all("p"):
             else:
                 beerInfo = {'novareName': beer}
             lists[index].append(beerInfo)
-            
+
 # output list as json with current timestamp
 print json.dumps({
     'lists': lists,

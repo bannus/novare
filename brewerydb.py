@@ -8,13 +8,13 @@ simple_endpoints = ["beers", "breweries", "categories", "events",
                     "featured", "features", "fluidsizes", "glassware",
                     "locations", "guilds", "heartbeat", "ingredients",
                     "search", "socialsites", "styles"]
-    
+
 single_param_endpoints = ["beer", "brewery", "category", "event",
                           "feature", "glass", "guild", "ingredient",
                           "location", "socialsite", "style", "menu"]
 
 class BreweryDb:
-    
+
     @staticmethod
     def __make_simple_endpoint_fun(name):
         @staticmethod
@@ -33,7 +33,7 @@ class BreweryDb:
     def _get(request, options):
         options.update({"key" : BreweryDb.API_KEY})
         return requests.get(BreweryDb.BASE_URI + request, params=options).text
-    
+
     @staticmethod
     def configure(apikey, baseuri=DEFAULT_BASE_URI):
         BreweryDb.API_KEY = apikey

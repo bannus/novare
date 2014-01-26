@@ -61,7 +61,7 @@ function printList($beers)
             <h1>Novare Res</h1>
             <div class="accordion" id="accordion2">
             <?
-                $file = "http://cloud.cs50.net/~kloot/novare/source.json";
+                $file = "source.json";
                 $json = json_decode(file_get_contents($file), true);
                 foreach($json['lists'] as $name=>$list)
                 {
@@ -73,7 +73,7 @@ function printList($beers)
             Last updated <?= $json['timestamp'] ?> EST
         </div>
     </div>
-</div>    
+</div> 
 </div><!-- / -->
 <script type="text/javascript" src="bootstrap/js/jquery.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
