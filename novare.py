@@ -34,6 +34,7 @@ listTitles = [
     "Maine Draughts",
     "Maine Beer Draughts",
     "Maine Taps",
+    "Cask",
     "On Cask",
     "On Draught",
     "Stout Fest Offerings"
