@@ -25,28 +25,30 @@ soup = BeautifulSoup(html)
 # for storing the various categories of draughts
 lists = OrderedDict()
 listTitles = [
+    "Draughts",
     "On Draught",
     "Regular Draughts",
-    "Draughts",
-    "On Tap",
-    "Regular Draughts",
-    "Non Belgian Offerings",
     "Maine Draughts",
     "Maine Beer Draughts",
     "Maine Taps",
     "Cask",
-    "On Cask",
     "On Draught",
-    "Stout Fest Offerings"
+    "On Tap",
+    "On Cask",
+    "Non Belgian Offerings",
+    "Stout Fest Offerings",
+    "Shelton Brother Draughts",
+    "Shelton Brothers Draughts"
 ]
 listTitles = listTitles + [title + ":" for title in listTitles]
+listTitles = listTitles + [title.upper() for title in listTitles]
 
 # configure brewerydb API
 BreweryDb.configure(config.key)
 index = None
 
 # find all beers in the draughts_reg span
-for beer in soup.find("span", "draughts_reg").find_all("p"):
+for beer in soup.find("span", "draughts_reg").find_all(["p", "h3", "h4"]):
     # get rid of tags in section header
     beer.string = beer.get_text()
 
@@ -58,7 +60,7 @@ for beer in soup.find("span", "draughts_reg").find_all("p"):
 
         # create new list if a category heading detected
         if (beer in listTitles):
-            index = beer
+            index = beer.title()
             lists[index] = []
         else:
             # default index in case none listed/recognized
