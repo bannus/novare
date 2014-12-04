@@ -48,15 +48,16 @@ BreweryDb.configure(config.key)
 index = None
 
 # find all beers in the draughts_reg span
-for beer in soup.find("span", "draughts_reg").find_all(["p", "h3", "h4"]):
+for beer in soup.find("span", "draughts_reg").find_all(["p", "h1", "h2", "h3", "h4"]):
     # get rid of tags in section header
-    beer.string = beer.get_text()
+    beer = beer.get_text()
 
     # do not display empty entries
-    if beer.string != None and beer.string.strip() != "":
-        beer.string = beer.string.strip()
-        beer = beer.string.encode('utf-8')
-        beer = beer.replace('’','\'')
+    if beer != None and beer.strip() != "":
+        beer = beer.strip()
+        beer = beer.replace(u"\u00a0", " ")
+        beer = beer.encode('utf-8')
+        beer = beer.replace('’', '\'')
 
         # create new list if a category heading detected
         if (beer in listTitles):
