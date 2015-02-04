@@ -26,8 +26,8 @@ soup = BeautifulSoup(html)
 lists = OrderedDict()
 listTitles = [
     "Draughts",
-    "On Draught",
     "Regular Draughts",
+    "Draught Bier",
     "Maine Draughts",
     "Maine Beer Draughts",
     "Maine Taps",

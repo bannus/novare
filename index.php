@@ -1,4 +1,4 @@
-<?
+<?php
 $i = 0;
 function printList($beers)
 {
@@ -42,7 +42,7 @@ function printList($beers)
         $i++;
     }
 }
-?>
+php?>
 
 <!DOCTYPE html>
 <html>
@@ -60,7 +60,7 @@ function printList($beers)
         <div class="padding">
             <h1>Novare Res</h1>
             <div class="accordion" id="accordion2">
-            <?
+            <?php
                 $file = "source.json";
                 $json = json_decode(file_get_contents($file), true);
                 foreach($json['lists'] as $name=>$list)
@@ -68,7 +68,7 @@ function printList($beers)
                     print "<h3>$name</h3>";
                     printList($list);
                 }
-            ?>
+            php?>
             </div>
             Last updated <?= $json['timestamp'] ?> EST
         </div>
