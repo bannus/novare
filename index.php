@@ -48,7 +48,7 @@ php?>
 <html>
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-<title>Novare Res</title>
+<title>Cambridge Common</title>
 
 <link href="bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet" />
 <link href="bootstrap/css/bootstrap-responsive.css" type="text/css" media="screen" rel="stylesheet" />
@@ -58,7 +58,7 @@ php?>
 <div class="wrapper">
     <div class="content">
         <div class="padding">
-            <h1>Novare Res</h1>
+            <h1>Cambridge Common</h1>
             <div class="accordion" id="accordion2">
             <?php
                 $file = "source.json";

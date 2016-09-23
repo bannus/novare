@@ -18,7 +18,7 @@ if len(sys.argv) == 2:
         useAPI = False
 
 # load novare beer list
-response = urllib2.urlopen('http://novareresbiercafe.com/draught.php')
+response = urllib2.urlopen('http://cambridgecommonrestaurant.com/on-tap-today/')
 html = response.read().decode('utf-8')
 soup = BeautifulSoup(html)
 
@@ -48,7 +48,7 @@ BreweryDb.configure(config.key)
 index = None
 
 # find all beers in the draughts_reg span
-for beer in soup.find("span", "draughts_reg").find_all(["p", "h1", "h2", "h3", "h4"]):
+for beer in soup.find("div", "split-container").find_all(["p"]):
     # get rid of tags in section header
     beer = beer.get_text()
 
