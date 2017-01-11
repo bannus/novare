@@ -1,8 +1,7 @@
 <?php
-$i = 0;
 function printList($beers)
 {
-    global $i;
+    $i = 0;
     foreach ($beers as $beer) 
     {
         echo "<div class=\"accordion-group\">";
@@ -42,6 +41,76 @@ function printList($beers)
         $i++;
     }
 }
+
+function printTable($beers)
+{
+    echo "<table class=\"table\">", PHP_EOL;
+    echo "<thead>", PHP_EOL;
+    echo "<tr>", PHP_EOL;
+    echo "<th></th>", PHP_EOL;
+    echo "<th>Beer</th>", PHP_EOL;
+    echo "<th>Style</th>", PHP_EOL;
+    echo "<th>ABV</th>", PHP_EOL;
+    echo "<th>IBU</th>", PHP_EOL;
+    echo "</tr>", PHP_EOL;
+    echo "</thead>", PHP_EOL;
+
+    $i = 0;
+    foreach ($beers as $beer) 
+    {
+        echo "<tr>", PHP_EOL;
+        echo "<td></td>", PHP_EOL;
+        echo "<td><a href=\"http://google.com/#safe=off&q=site:ratebeer.com {$beer['novareName']}\">";
+        echo $beer['novareName'];
+        echo "</a></td>";
+
+        if (isset($beer['style']))
+        {
+            echo "<td>{$beer['style']['shortName']}</td>";
+        }
+        else
+        {
+            echo "<td></td>", PHP_EOL;
+        }
+        if (isset($beer['abv']))
+        {
+            echo "<td>{$beer['abv']}%</td>";
+        }
+        else
+        {
+            echo "<td></td>", PHP_EOL;
+        }
+        if (isset($beer['ibu']))
+        {
+            echo "<td>{$beer['ibu']}</td>";
+        }
+        else
+        {
+            echo "<td></td>", PHP_EOL;
+        }
+        //if (isset($beer['description']))
+        //{
+            //echo " - ";
+            //echo "<a data-toggle=\"collapse\" data-parent=\"#accordion2\" href=\"#collapse$i\">";
+            //echo "Description";
+            //echo "</a>";
+            //echo "</div>", PHP_EOL;
+            //echo "</div>", PHP_EOL;
+            //echo "<div id=\"collapse$i\" class=\"accordion-body collapse\">";
+            //echo "<div class=\"accordion-inner\">";
+            //echo "{$beer['description']}";
+            //echo "</div>", PHP_EOL;
+            //echo "</div>", PHP_EOL;
+        //}
+        //else
+        //{
+            //echo "</div>", PHP_EOL;
+            //echo "</div>", PHP_EOL;
+        //}
+        $i++;
+    }
+    echo "</table>", PHP_EOL;
+}
 php?>
 
 <!DOCTYPE html>
@@ -57,19 +126,18 @@ php?>
 <body>
 <div class="wrapper">
     <div class="content">
+
         <div class="padding">
             <h1>Novare Res</h1>
-            <div class="accordion" id="accordion2">
             <?php
                 $file = "source.json";
                 $json = json_decode(file_get_contents($file), true);
                 foreach($json['lists'] as $name=>$list)
                 {
                     print "<h3>$name</h3>";
-                    printList($list);
+                    printTable($list);
                 }
             php?>
-            </div>
             Last updated <?= $json['timestamp'] ?> EST
         </div>
     </div>
